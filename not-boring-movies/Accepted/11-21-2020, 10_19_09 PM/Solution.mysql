@@ -1,0 +1,4 @@
+// https://leetcode.com/problems/not-boring-movies
+
+# Write your MySQL query statement below
+select cinema.id, cinema.movie, cinema.description, cinema.rating from cinema where cinema.id % 2 <> 0 AND cinema.description <> 'boring' order by cinema.rating desc;
