@@ -10,37 +10,23 @@
  * };
  */
 class Solution {
-    set<pair<TreeNode*, TreeNode*>> s;
+    int res = 0;
 public:
-    void traverse(TreeNode* root, vector<TreeNode*> &path, int targetSum) {
+    void helper(TreeNode* root, long long targetSum) {
         if (!root)
             return;
-        if (!root->left && !root->right) {
-            path.push_back(root);
-            for (auto i = 0; i < path.size(); i++) {
-                long long _sum = 0;
-                for (auto j = i; j < path.size(); j++) {
-                    _sum += path[j]->val;
-                    if (_sum == targetSum) {
-                        s.insert(make_pair(path[i], path[j]));
-                    }
-                }
-            }
-            path.pop_back();    //undo
-            return;
-        }
-        path.push_back(root);
-        traverse(root->left, path, targetSum);
-        traverse(root->right, path, targetSum);
-        path.pop_back();
+        if (root->val == targetSum)
+            res++;
+        helper(root->left, targetSum - root->val);
+        helper(root->right, targetSum - root->val);
     }
 
     int pathSum(TreeNode* root, int targetSum) {
-        s.clear();
         if (!root)
             return 0;
-        vector<TreeNode*> path;
-        traverse(root, path, targetSum);
-        return s.size();
+        helper(root, targetSum);
+        pathSum(root->left, targetSum);
+        pathSum(root->right, targetSum);
+        return res;
     }
 };
