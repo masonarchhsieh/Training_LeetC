@@ -1,0 +1,5 @@
+// https://leetcode.com/problems/customers-who-never-order
+
+# Write your MySQL query statement below
+Select Customers.Name as Customers from Customers 
+Where Customers.Id NOT IN (Select Orders.CustomerId from Orders);
