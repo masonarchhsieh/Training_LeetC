@@ -38,11 +38,7 @@ public:
     void updateTree(TreeNode* itr, TreeNode* parent, int level) {
         if (!parent || !itr)
             return;
-        if (level < 2) {
-            itr->val = 0;
-        } else {
-            itr->val = level_sum_m[level] - subtree_sum[parent];       
-        }
+        itr->val = (level < 2)? 0 : level_sum_m[level] - subtree_sum[parent];
         updateTree(itr->left, itr, level + 1);
         updateTree(itr->right, itr, level + 1);
     }
