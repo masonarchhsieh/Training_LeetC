@@ -15,10 +15,15 @@ public:
     string smallestFromLeaf(TreeNode* root) {
         string path = "";
         buildTree(root, path);
-        string res = v.front();
-        for (auto i : v)
-            if (res > i)
+        string res;
+        bool hasSet = false;
+        for (auto &i : v) {
+            reverse(i.begin(), i.end());
+            if (res > i || !hasSet) {
+                hasSet = true;
                 res = i;
+            }
+        }
 
         return res;
     }
@@ -32,9 +37,7 @@ public:
         if (root->left)
             buildTree(root->left, path);
         if (!root->left && !root->right) {
-            string s_path = path;
-            reverse(s_path.begin(), s_path.end());
-            v.push_back(s_path);
+            v.push_back(path);
             return;
         }
         if (root->left)
