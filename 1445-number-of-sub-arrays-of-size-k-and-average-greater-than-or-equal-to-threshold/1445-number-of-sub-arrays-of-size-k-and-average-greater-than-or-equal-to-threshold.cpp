@@ -10,7 +10,6 @@ public:
             res += (current_sum >= _threshold);
         }
         
-
         return res;
     }
 };
