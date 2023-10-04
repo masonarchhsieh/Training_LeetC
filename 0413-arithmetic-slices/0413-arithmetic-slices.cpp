@@ -18,6 +18,7 @@ public:
         return res;
     }
 
+    // Triangular Numbers Sequence
     int countSequences(int len) {
         if (len < 3)
             return 0;
