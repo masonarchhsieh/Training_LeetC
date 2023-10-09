@@ -10,9 +10,8 @@ public:
         for (auto l = 0, r = 0; r < size(diff_v); r++) {
             sum += diff_v[r];
 
-            while (sum > maxCost) {
+            while (sum > maxCost)
                 sum -= diff_v[l++];
-            }
             res = max(res, r - l + 1);
         }
         return res;
