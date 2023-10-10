@@ -8,7 +8,6 @@ public:
             curr_sum = (curr_sum * 10 + word[i] - '0') % m;
             div[i] = (curr_sum == 0);
         }
-
         return div;
     }
 };
