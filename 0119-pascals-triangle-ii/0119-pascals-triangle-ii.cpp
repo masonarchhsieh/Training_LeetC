@@ -1,17 +1,14 @@
 class Solution {
 public:
     vector<int> getRow(int rowIndex) {
-        vector<vector<int>> pascalTriangle;
-        pascalTriangle.push_back({ 1 });
-        pascalTriangle.push_back({ 1, 1 });
-        for (auto i = 2; i < rowIndex + 1; i++) {
-            vector<int> v { 1 };
-            for (auto j = 1; j < pascalTriangle[i-1].size(); j++) {
-                v.push_back(pascalTriangle[i-1][j-1] + pascalTriangle[i-1][j]);
-            }
-            v.push_back(1);
-            pascalTriangle.push_back(v);            
+        vector<vector<int>> pascal_triangle;
+        for (auto i = 0; i <= rowIndex; i++) {
+            vector<int> tmp(i + 1, 1);
+            for (auto j = 1; j < i; j++)
+                tmp[j] = pascal_triangle[i-1][j] + pascal_triangle[i-1][j-1];
+            pascal_triangle.push_back(tmp);
         }
-        return pascalTriangle[rowIndex];
+
+        return pascal_triangle[rowIndex];
     }
 };
