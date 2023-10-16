@@ -1,35 +1,28 @@
 class MinStack {
-    stack<int> st;
-    multiset<int> _multiset;
+    vector<pair<int, int>> v;
     
 public:
     MinStack() {
-        // st.clear();
-        // _multiset.clear();
+        v.clear();
     }
     
     void push(int val) {
-        st.push(val);
-        _multiset.insert(val);
+        if (v.empty())
+            v.push_back({val, val});
+        else
+            v.push_back({val, min(val, v.back().second)});
     }
     
     void pop() {
-        if (st.empty())
-            return;
-        _multiset.erase(_multiset.find(st.top()));
-        for (auto i : _multiset)
-            cout << i << endl;
-        st.pop();
+        v.pop_back();
     }
     
     int top() {
-        if (st.empty())
-            return -1;
-        return st.top();
+        return v.back().first;
     }
     
     int getMin() {   
-        return *(_multiset.begin());
+        return v.back().second;
     }
 };
 
