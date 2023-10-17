@@ -5,15 +5,12 @@ public:
         int n = board.size(), m = board[0].size();
         vector<vector<bool>> visited(n, vector<bool>(m, false));
 
-        for (auto i = 0; i < n; i++) {
-            for (auto j = 0; j < m; j++) {
+        for (auto i = 0; i < n; i++)
+            for (auto j = 0; j < m; j++)
                 if (board[i][j] == 'X' && !visited[i][j]) {
                     helper(board, visited, i, j, -1);
                     cnt++;
                 }
-            }
-        }
-        
 
         return cnt;
     }
