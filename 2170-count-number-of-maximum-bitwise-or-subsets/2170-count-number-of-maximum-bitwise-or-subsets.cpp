@@ -11,13 +11,11 @@ public:
     }
 
     void backtrack(vector<int>& nums, int index, int value, int target, int& res) {
-        if (index == size(nums) || value > target) {
+        if (index == size(nums) || value > target)
             return;
-        }
 
-        if ((value | nums.at(index)) == target) {
-            res++;
-        }
+        if ((value | nums.at(index)) == target)
+            res++;   
         backtrack(nums, index + 1, (value | nums.at(index)), target, res);
         backtrack(nums, index + 1, value, target, res);
     }
