@@ -14,24 +14,29 @@ class Solution {
 public:
     vector<int> findMode(TreeNode* root) {
         vector<int> res;
-        int max_occ = 0;
-        travelTree(root);
+        m.clear();
+        helper(root);
 
-        for (auto i : m)
-            if (i.second > max_occ)
-                max_occ = i.second;
-        for (auto i : m)
-            if (i.second == max_occ)
+        int cnt = 0;
+        for (auto i : m) {
+            if (cnt < i.second) {
+                cnt = i.second;
+                res = { i.first };
+                continue;
+            }
+            else if (cnt == i.second) {
                 res.push_back(i.first);
-
+            }
+        }
+        
         return res;
     }
 
-    void travelTree(TreeNode* root) {
+    void helper(TreeNode* root) {
         if (!root)
             return;
         m[root->val]++;
-        travelTree(root->left);
-        travelTree(root->right);
+        helper(root->left);
+        helper(root->right);
     }
 };
