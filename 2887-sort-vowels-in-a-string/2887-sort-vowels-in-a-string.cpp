@@ -1,11 +1,11 @@
+constexpr bool compare(const char &c1, const char &c2) {
+    return c1 > c2;
+}
+static bool isVow(char c) {
+    c = tolower(c);
+    return (c == 'a' | c == 'e' | c == 'i' | c == 'o' | c == 'u');
+}
 class Solution {
-    static bool compare(const char &c1, const char &c2) {
-        return c1 > c2;
-    }
-    bool isVow(char c) {
-        c = tolower(c);
-        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u');
-    }
 public:
     string sortVowels(string s) {
         vector<char> vowels;
