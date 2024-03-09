@@ -1,9 +1,9 @@
 class Solution {
 public:
-    int rangeBitwiseAnd(unsigned left, unsigned right) {
+    int rangeBitwiseAnd(int left, int right) {
         while (right > left) {
-            right = right & (right - 1);
+            right = (right & (right - 1));
         }
-        return left & right;
+        return right & left;
     }
 };
