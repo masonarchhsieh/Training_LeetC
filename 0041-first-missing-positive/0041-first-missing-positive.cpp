@@ -9,7 +9,6 @@ public:
 
         int i = 1;
         while (!pq.empty() && i == pq.top()) {
-            cout << pq.top() << endl;
             for (;!pq.empty() && i == pq.top(); pq.pop()) {
                 ;
             }
