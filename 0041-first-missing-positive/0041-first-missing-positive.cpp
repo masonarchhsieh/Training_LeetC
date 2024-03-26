@@ -1,23 +1,21 @@
 class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        vector<int>::iterator it;
-        it = unique(nums.begin(), nums.end());
-        nums.resize(distance(nums.begin(), it));
-        int idx = 0;
-        for (auto i = 0; i < nums.size(); i++) {
-            if (nums[i] > 0) {
-                if (nums[i] != 1)
-                    return 1;
-                idx = i;
-                break;
-            }
+        priority_queue<int, vector<int>, greater<int>> pq;
+        for (auto i : nums) {
+            if (i > 0)
+                pq.push(i);
         }
-        for (auto i = idx + 1; i < nums.size(); i++)
-            if (nums[i] - nums[i - 1] != 1)
-                return nums[i-1] + 1;
 
-        return (nums[nums.size() - 1] > 0)? nums[nums.size() - 1] + 1 : 1;
+        int i = 1;
+        while (!pq.empty() && i == pq.top()) {
+            cout << pq.top() << endl;
+            for (;!pq.empty() && i == pq.top(); pq.pop()) {
+                ;
+            }
+            i++;
+        }
+
+        return i;
     }
 };
