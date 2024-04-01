@@ -1,17 +1,16 @@
 class Solution {
 public:
     int lengthOfLastWord(string s) {
-        int itr = s.length() - 1;
-        int res = 0;
-        while (isspace(s[itr])) {
-            itr--;
-        }
+        int len = 0;
+        int i = s.length() - 1;
         
-        while(itr >= 0 && isalpha(s[itr])) {
-            res++;
-            itr--;
+        while (isspace(s[i]) && i >= 0)
+            i--;
+        
+        while (i >= 0 && isalpha(s[i])) {
+            len++;
+            i--;
         }
-         
-        return res;
+        return len;
     }
 };
