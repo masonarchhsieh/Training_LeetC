@@ -30,8 +30,6 @@ public:
         node->prev = tail->prev;
         node->next = tail;
         tail->prev = node;
-        
-        cache[node->key] = node;
     }
 
     void deleteNode(ListNode *node) {
@@ -39,7 +37,6 @@ public:
             return;
         node->prev->next = node->next;
         node->next->prev = node->prev;
-        cache.erase(node->key);
     }
     
     int get(int key) {
@@ -53,14 +50,17 @@ public:
     
     void put(int key, int value) {
         if (cache.find(key) == cache.end()) {
+            cout << "cache miss" << endl;
             // delete the least recently used element
             if (cache.size() == capacity_) {
                 ListNode* victim = head->next;
                 deleteNode(victim);
+                cache.erase(victim->key);
                 delete victim;
             }
             ListNode* node = new ListNode(key, value);
             addNode(node);
+            cache[node->key] = node;
             return;
         }
         // if the data is already in cache
