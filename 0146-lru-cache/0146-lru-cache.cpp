@@ -1,69 +1,72 @@
-struct Node {
-    int key;
-    int val;
-    Node *next;
-    Node *prev;
-    Node(int _key, int _val) {
-        key = _key;
-        val = _val;
-        next = nullptr;
-        prev = nullptr;
-    }
-};
-
 class LRUCache {
-    Node* head = new Node(-1, -1);
-    Node* tail = new Node(-1, -1);
-    unordered_map<int, Node*> m;
-    int size = 0;
+    int capacity_ = 0;
+    struct ListNode {
+        int key = -1;
+        int value = -1;
+        ListNode *next;
+        ListNode *prev;
+
+        ListNode(){};
+        ListNode(int key, int value) : key(key), value(value) {};
+    };
+    unordered_map<int, ListNode*> cache;
+    ListNode *head, *tail;
 public:
     LRUCache(int capacity) {
-        size = capacity;
+        capacity_ = capacity;
+        head = new ListNode();
+        tail = new ListNode();
         head->next = tail;
+        head->prev = tail;
         tail->next = head;
+        tail->prev = head;
+        cache.clear();
+    }
+
+    void addNode(ListNode *node) {
+        if (!node)
+            return;
+        tail->prev->next = node;
+        node->prev = tail->prev;
+        node->next = tail;
+        tail->prev = node;
+        
+        cache[node->key] = node;
+    }
+
+    void deleteNode(ListNode *node) {
+        if (!node)
+            return;
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+        cache.erase(node->key);
     }
     
     int get(int key) {
-        unordered_map<int,Node*>::iterator found = m.find(key);
-        // didn't found it
-        if (found == m.end()) {
+        if (cache.find(key) == cache.end())
             return -1;
-        }
-
-        Node *node = m[key];
-        deleteNode(node);
-        addNode(node);
-        return node->val;
+        ListNode* t = cache[key];
+        deleteNode(t);
+        addNode(t);
+        return cache[key]->value;
     }
-    void deleteNode(Node *node) {
-        unordered_map<int, Node*>::iterator found = m.find(node->key);
-        if (found != m.end()) {
-            m.erase(found);
-        }
-        node->prev->next = node->next;
-        node->next->prev = node->prev;
-    }
-    void addNode(Node* node) {
-        m.insert(make_pair(node->key, node));
-        node->next = head->next;
-        head->next->prev = node;
-        head->next = node;
-        node->prev = head;
-    }
+    
     void put(int key, int value) {
-        unordered_map<int,struct Node*>::iterator found = m.find(key);
-        // found it
-        if (found != m.end()) {
-            Node *node = m[key];
-            deleteNode(node);
+        if (cache.find(key) == cache.end()) {
+            // delete the least recently used element
+            if (cache.size() == capacity_) {
+                ListNode* victim = head->next;
+                deleteNode(victim);
+                delete victim;
+            }
+            ListNode* node = new ListNode(key, value);
             addNode(node);
-            node->val = value;
             return;
         }
-        if (m.size() == size) {
-            deleteNode(tail->prev);
-        }
-        addNode(new Node(key, value));
+        // if the data is already in cache
+        cache[key]->value = value;
+        deleteNode(cache[key]);
+        addNode(cache[key]);
     }
 };
 
