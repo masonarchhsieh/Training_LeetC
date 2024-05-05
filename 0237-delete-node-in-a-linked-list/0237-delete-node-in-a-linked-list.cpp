@@ -13,9 +13,9 @@ public:
             node = NULL;
             return;
         }
-        ListNode *itr = node, *nxt = node->next;
 
-        while (nxt) {
+        ListNode *itr = node, *nxt = node->next;
+        while (itr) {
             while (nxt && nxt->val == node->val) {
                 nxt = nxt->next;
             }
@@ -25,8 +25,7 @@ public:
             }
             itr->val = nxt->val;
             nxt = nxt->next;
-            if (nxt == NULL) {
-                itr->next = NULL;
+            if (!nxt) {
                 break;
             }
             itr = itr->next;
