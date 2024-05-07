@@ -11,27 +11,13 @@
 class Solution {
 public:
     ListNode* doubleIt(ListNode* head) {
-        ListNode *res = helper(head);
-        if (res && res->val >= 10) {
-            ListNode *node = new ListNode(res->val / 10, res);
-            res->val %= 10;
-            res = node;
+        if (head->val > 4)
+            head = new ListNode(0, head);
+        for (ListNode *node = head; node; node = node->next) {
+            node->val = (node->val * 2) % 10;
+            if (node->next && node->next->val > 4)
+                node->val++;
         }
-        
-        return res;
-    }
-
-    ListNode *helper(ListNode *head) {
-        if (!head)
-            return head;      
-        head->val *= 2;
-        if (!head->next)
-            return head;
-        ListNode *nxt = helper(head->next);
-        if (nxt->val >= 10) {
-            head->val += nxt->val / 10;
-            nxt->val = nxt->val % 10;
-        }
-        return head;
+        return head;   
     }
 };
