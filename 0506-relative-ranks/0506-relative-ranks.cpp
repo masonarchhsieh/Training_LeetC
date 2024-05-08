@@ -1,27 +1,25 @@
 class Solution {
 public:
     vector<string> findRelativeRanks(vector<int>& score) {
-        vector<int> v = score;
-        sort(v.rbegin(), v.rend());
+        vector<string> res;
+        res.resize(score.size());
+        unordered_map<int, int> m;
 
-        vector<string> res(score.size(), "");
-        for (auto i = 0; i < size(score); i++) {
-            auto place = std::find(v.begin(), v.end(), score[i]) - v.begin();
-            switch (place) {
-                case 0:
-                    res[i] = "Gold Medal";
-                    break;
-                case 1:
-                    res[i] = "Silver Medal";
-                    break;
-                case 2:
-                    res[i] = "Bronze Medal";
-                    break;
-                default:
-                    res[i] = std::to_string(place + 1);
-                    break;
-            }
+        for (auto i = 0; i < score.size(); i++)
+            m[score[i]] = i;
+
+        sort(score.begin(), score.end());
+        for (auto i = 0; i < score.size(); i++) {
+            if (i == score.size() - 1)
+                res[m[score[i]]] = "Gold Medal";
+            else if (i == score.size() - 2)
+                res[m[score[i]]] = "Silver Medal";
+            else if (i == score.size() - 3)
+                res[m[score[i]]] = "Bronze Medal";
+            else
+                res[m[score[i]]] = to_string(score.size() - i);
         }
+
         return res;
     }
 };
