@@ -14,7 +14,6 @@ public:
     TreeNode* createBinaryTree(vector<vector<int>>& descriptions) {
         unordered_set<int> childs;
         unordered_map<int, TreeNode*> m;
-        TreeNode *root;
 
         for (auto description : descriptions) {
             TreeNode *parent, *child;
